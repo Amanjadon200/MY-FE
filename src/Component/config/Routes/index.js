@@ -2,6 +2,7 @@ import Contact from "../../../pages/Contact";
 import Help from "../../../pages/Help";
 import LandingPage from "../../../pages/LandingPage";
 import LogIn from "../../../pages/LogIn";
+import BasicTable from "../../../pages/Table";
 
 export const  routes =[
     {
@@ -23,5 +24,11 @@ export const  routes =[
         id:"landingPage",
         path:"/help",
         component:<Help/>
+    }
+    ,
+    {
+        id:"table",
+        path:"/table",
+        component:<BasicTable/>
     }
 ]
