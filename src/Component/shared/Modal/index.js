@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 
@@ -12,8 +12,7 @@ const customStyles = {
 };
 
 // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
-export default function CustomModal({ filteredData }) {
-    let subtitle;
+export default function CustomModal({ filteredData,ticket }) {
     const [modalIsOpen, setIsOpen] = React.useState(false);
 
     function openModal() {
@@ -24,7 +23,7 @@ export default function CustomModal({ filteredData }) {
     //     // references are now sync'd and can be accessed.
     //     subtitle.style.color = '#f00';
     //   }
-
+    
     function closeModal() {
         setIsOpen(false);
     }

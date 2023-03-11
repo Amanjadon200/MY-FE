@@ -22,11 +22,16 @@ const Navbar = () => {
           <li>
             <Link to="/contact">Contact</Link>
           </li>
+          <Link to="/register">
             <button className="bg-gray-400 p-2">Register</button>
-         
-         
-            <button className="bg-gray-400 p-2">LogIn</button>
-          
+          </Link>
+
+          <button className="bg-gray-400 p-2">LogIn</button>
+          <Link to="/table">
+            <button className="bg-gray-400 p-2">Table</button>
+
+          </Link>
+
         </ul>
       </div>
     </nav></div>

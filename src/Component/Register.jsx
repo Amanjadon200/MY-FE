@@ -1,23 +1,29 @@
 /* eslint-disable no-undef */
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik } from 'formik';
 import axios from 'axios'
 
-const Basic = () => {
+const Register = () => {
+  const [error,setError]=useState()
   async function  postData(data)
   {
-    console.log(typeof data)
-    await axios.post("http://127.0.0.1:3001",
+    console.log(data,"***************")
+    await axios.post("http://127.0.0.1:3001/register",
     data,
     {headers: { 'Accept': 'application/json',
       'Content-Type': 'application/json; charset=UTF-8',
     }
   },
-  )
+  ).then((res)=>{
+    console.log(res)
+setError(res.data.error)
+  }).catch((err)=>{
+    console.log(err)
+  })
 }
 return (
-  <div className='mt-10'>
-    <h1>Fill the form to register</h1>
+  <div className='mt-10 poppins'>
+    <h1 className='text-xl'>Fill the form to register</h1>
     <Formik
       initialValues={{ email: '', password: '' }}
       validate={values => {
@@ -56,7 +62,7 @@ return (
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.email}
-            className="border-2 border-slate-500 w-[30%]"
+            className="border-2 border-slate-500 w-[30%] p-1"
             
           />
           {errors.email && touched.email && errors.email}
@@ -68,8 +74,9 @@ return (
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.password}
-            className="border-2 border-slate-500 w-[30%]"
+            className="border-2 border-slate-500 w-[30%] p-1"
           />
+          {error!=='' && error}
           {errors.password && touched.password && errors.password}
           <button type="submit" disabled={isSubmitting} className="bg-blue-600 w-[100px] mt-5 text-white p-2">
             Submit
@@ -81,4 +88,4 @@ return (
 );
       }
 
-export default Basic;
+export default Register;

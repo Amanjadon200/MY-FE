@@ -3,6 +3,7 @@ import Help from "../../../pages/Help";
 import LandingPage from "../../../pages/LandingPage";
 import LogIn from "../../../pages/LogIn";
 import BasicTable from "../../../pages/Table";
+import Register from "../../Register";
 
 export const  routes =[
     {
@@ -30,5 +31,11 @@ export const  routes =[
         id:"table",
         path:"/table",
         component:<BasicTable/>
+    }
+    ,
+    {
+        id:"register",
+        path:"/register",
+        component:<Register/>
     }
 ]
