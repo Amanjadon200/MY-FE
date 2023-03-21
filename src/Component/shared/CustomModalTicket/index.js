@@ -49,7 +49,7 @@ export default function CustomModalTicket({ ticket, createTicket }) {
         const date = (new Date()).toLocaleDateString();
         const obj = {
             ...formData,
-            id: "GEM-INC-0908",
+            id: Math.ceil(Math.random()*100),
             department: 'unassigned',
             time: date,
             assignedTo: "abcd",

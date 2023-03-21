@@ -32,7 +32,6 @@ export default function BasicTable() {
     const [selectedDepartment, setSelectedDepartment] = useState('');
     const [selectedStatus, setSelectedStatus] = useState('');
     const filterData = (department, status) => {
-        console.log(filteredData, department, status)
         if (department === '' && status === '') {
             filteredData && setPageFilteredData(filteredData)
         }
@@ -79,9 +78,11 @@ export default function BasicTable() {
         }))
         setDataComes(true)
     }
+    const [selectedId,setSelectedId]=useState('')
     React.useEffect(() => {
         getTicketData();
-    }, [])
+    }, [selectedId])
+
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     React.useEffect(() => {
         filteredDataDueToPageChange();
@@ -91,7 +92,7 @@ export default function BasicTable() {
     const [position, setPosition] = useState({ x: 0, y: 0 })
     return (<>
         <CustomModal filteredData={filterData} selectedDepartment={selectedDepartment} setSelectedDepartment={setSelectedDepartment} selectedStatus={selectedStatus} setSelectedStatus={setSelectedStatus}/>
-        <CustomModal2 message={'cancel a ticket'} setOpenModal={setOpenModal} openModal={openModal} position={position} />
+        <CustomModal2 message={'cancel a ticket'} setOpenModal={setOpenModal} openModal={openModal} position={position} selectedId={selectedId} setSelectedId={setSelectedId}/>
 
         {createTicket && <CustomModalTicket ticket={ticket} createTicket={createTicket} />}
         <div className='flex justify-end'>
@@ -127,7 +128,7 @@ export default function BasicTable() {
                             <TableCell align="right text-center">{row.assignedTo}</TableCell>
                             <TableCell align="right text-center">{row.status}</TableCell>
                             <TableCell className='text-center' component="th" scope="row">
-                                <button type='button' disabled={row.status === 'Closed' ? true : false} onClick={(e) => { setOpenModal(true); setPosition({ x: e.clientX, y: e.clientY }) }}>{row.actions}</button>
+                                <button id={row.id} type='button' disabled={row.status === 'Closed' ? true : false} onClick={(e) => { setOpenModal(true);setSelectedId(e.target.id); setPosition({ x: e.clientX, y: e.clientY }) }}>{row.actions}</button>
                             </TableCell>
                             {/* <CustomModal2/> */}
                         </TableRow>

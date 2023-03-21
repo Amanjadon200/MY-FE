@@ -9,7 +9,6 @@ export default function SingleFileUpload({ formData, setFormData }) {
                 ...formData, uploadFile: e.target.value
             }
         )
-        console.log(e.target.files[0])
         if (e.target.files) {
             setFile(e.target.files[0]);
         }

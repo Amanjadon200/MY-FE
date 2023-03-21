@@ -2,8 +2,8 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import CancelIcon from '@mui/icons-material/Cancel';
-
-export default function CustomModal2({ message, setOpenModal, openModal, position }) {
+import axios from 'axios';
+export default function CustomModal2({ message, setOpenModal, openModal, position,selectedId,setSelectedId }) {
     const handleClose = () => {
         setOpenModal(false)
     };
@@ -18,6 +18,10 @@ export default function CustomModal2({ message, setOpenModal, openModal, positio
         backgroundColor: 'white',
         zIndex:-1,
     }
+    const deleteData=async()=>{
+        await axios.delete('http://127.0.0.1:3001/tickets?id='+selectedId);
+        setSelectedId('')
+    }
     return (
         <div>
             <Modal
@@ -29,7 +33,7 @@ export default function CustomModal2({ message, setOpenModal, openModal, positio
             >
                 <Box sx={contentStyle}>
                     <header className='flex'>
-                        <p><CancelIcon onClick={() => { setOpenModal(false) }} /></p>
+                        <p><CancelIcon onClick={() => { setOpenModal(false);deleteData() }} /></p>
                         <p>{message}</p></header>
                 </Box>
             </Modal>

@@ -31,7 +31,7 @@ const Navbar = () => {
             <button className=" p-2">Register</button>
           </Link>
 
-          {!logIn?<button className=" p-2" onClick={()=>{navigate('/logIn')}}>LogIn</button>:<button className="bg-gray-400 p-2" onClick={()=>{dispatch(LOG_OUT())}}>LogOut</button>}
+          {!logIn?<button className=" p-2" onClick={()=>{navigate('/logIn')}}>LogIn</button>:<button className="p-2" onClick={()=>{dispatch(LOG_OUT())}}>LogOut</button>}
           <Link to="/tickets">
             <button className=" p-2">Tickets</button>
           </Link>

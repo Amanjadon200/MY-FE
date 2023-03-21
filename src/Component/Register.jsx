@@ -6,7 +6,6 @@ import axios from "axios";
 const Register = () => {
   const [error, setError] = useState();
   async function postData(data) {
-    console.log(data, "***************");
     await axios
       .post("http://127.0.0.1:3001/register", data, {
         headers: {
@@ -18,7 +17,6 @@ const Register = () => {
         setError(res.data.error);
       })
       .catch((err) => {
-        console.log(err);
       });
   }
 
@@ -36,7 +34,6 @@ const Register = () => {
           ) {
             errors.email = "Invalid email address";
           }
-          console.log(values.password);
           if (!values.password) {
             errors.password = "Please provide your password ";
           } else if (!(values.password.length >= 8)) {
