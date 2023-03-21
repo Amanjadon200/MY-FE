@@ -54,7 +54,7 @@ export default function CustomModalTicket({ ticket, createTicket }) {
             time: date,
             assignedTo: "abcd",
             status: "Open",
-            actions: "cancel a ticket",
+            actions: ":",
         }
         const objData = {
             id: obj.id,
@@ -67,7 +67,7 @@ export default function CustomModalTicket({ ticket, createTicket }) {
             actions: obj.actions,
         }
         const StringObj = JSON.stringify(objData);
-        await axios.post('http://127.0.0.1:3001/',
+        await axios.post('http://127.0.0.1:3001/tickets',
             StringObj,
             {
                 headers: {
@@ -83,7 +83,6 @@ export default function CustomModalTicket({ ticket, createTicket }) {
             uploadFile: ''
         })
     }
-    console.log(formData)
     return (
         <div>
             <Modal

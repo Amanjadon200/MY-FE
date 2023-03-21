@@ -1,8 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import AJ from "../../../assets/AJLogo.jpg"
+import { LOG_OUT } from "../../../redux/actions";
 const Navbar = () => {
+  const dispatch=useDispatch();
+  const navigate=useNavigate()
+  const logIn=useSelector((state)=>{return state.LogIn})
   return (
     <div><nav className="navbar navbar-expand-lg bg-body-tertiary text-black-900 w-[100vw]">
       <div className="flex w-[100vw] text-start">
@@ -23,13 +28,12 @@ const Navbar = () => {
             <Link to="/contact">Contact</Link>
           </li>
           <Link to="/register">
-            <button className="bg-gray-400 p-2">Register</button>
+            <button className=" p-2">Register</button>
           </Link>
 
-          <button className="bg-gray-400 p-2">LogIn</button>
-          <Link to="/table">
-            <button className="bg-gray-400 p-2">Table</button>
-
+          {!logIn?<button className=" p-2" onClick={()=>{navigate('/logIn')}}>LogIn</button>:<button className="bg-gray-400 p-2" onClick={()=>{dispatch(LOG_OUT())}}>LogOut</button>}
+          <Link to="/tickets">
+            <button className=" p-2">Tickets</button>
           </Link>
 
         </ul>

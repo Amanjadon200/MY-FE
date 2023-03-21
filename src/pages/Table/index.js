@@ -11,6 +11,8 @@ import Paper from '@mui/material/Paper';
 import CustomModal from '../../Component/shared/Modal';
 import axios from 'axios';
 import CustomModalTicket from '../../Component/shared/CustomModalTicket';
+import CustomModal2 from '../../Component/shared/CustomModal';
+import Pagination from '../../Component/shared/Pagination';
 // function createData(name, calories, fat, carbs, protein) {
 //     return { name, calories, fat, carbs, protein };
 // }
@@ -24,47 +26,79 @@ import CustomModalTicket from '../../Component/shared/CustomModalTicket';
 
 export default function BasicTable() {
     const [rows, setRows] = useState();
-    const getTicketData = async () => {
-        const res = await axios.get('http://127.0.0.1:3001');
-        console.log(res)
-        setRows(res.data)
-        setFilteredData(res.data)
-    }
-    React.useEffect(() => {
-        getTicketData()
-    }, [])
     const [filteredData, setFilteredData] = useState(rows)
+    const [dataComes, setDataComes] = useState(false);
+    const [pageFilteredData, setPageFilteredData] = useState(rows);
+    const [selectedDepartment, setSelectedDepartment] = useState('');
+    const [selectedStatus, setSelectedStatus] = useState('');
     const filterData = (department, status) => {
+        console.log(filteredData, department, status)
         if (department === '' && status === '') {
-            setFilteredData(rows);
-            return;
+            filteredData && setPageFilteredData(filteredData)
         }
         else if (department !== '' && status !== '') {
-            console.log(department, status)
-            setFilteredData(rows.filter((data) => {
+            filteredData && setPageFilteredData(filteredData.filter((data) => {
                 return (data.department === department && data.status === status)
             }))
         }
         else if (department === '' && status !== '') {
-            setFilteredData(rows.filter((data) => {
+            filteredData && setPageFilteredData(filteredData.filter((data) => {
                 return data.status === status
             }))
         }
         else {
-            console.log('object')
-            setFilteredData(rows.filter((data) => {
+            filteredData && setPageFilteredData(filteredData.filter((data) => {
                 return data.department === department
             }))
         }
     }
-    console.log(filteredData)
-    const [ticket,createTicket]=useState(false);
+
+    let data = []
+    const fun = () => {
+        data = rows && rows.filter((data, idx) => {
+            return idx >= ((page) * rowsPerPage) && idx <= ((page + 1) * rowsPerPage) - 1
+        })
+        setFilteredData(data)
+    }
+    const filteredDataDueToPageChange = () => {
+        fun();
+    }
+    const [page, setPage] = React.useState(0);
+    React.useEffect(() => {
+        fun()
+    }, [dataComes, page])
+    React.useEffect(() => {
+
+        filterData(selectedDepartment,selectedStatus)
+    }, [filteredData])
+    const getTicketData = async () => {
+        const res = await axios.get('http://127.0.0.1:3001/tickets');
+        setRows(res.data)
+        setFilteredData(res.data.filter((data, idx) => {
+            return idx >= ((page) * rowsPerPage) && idx <= ((page + 1) * rowsPerPage) - 1
+        }))
+        setDataComes(true)
+    }
+    React.useEffect(() => {
+        getTicketData();
+    }, [])
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    React.useEffect(() => {
+        filteredDataDueToPageChange();
+    }, [rowsPerPage, page])
+    const [ticket, createTicket] = useState(false);
+    const [openModal, setOpenModal] = useState(false);
+    const [position, setPosition] = useState({ x: 0, y: 0 })
     return (<>
-        <CustomModal  filteredData={filterData}/>
-      {createTicket &&  <CustomModalTicket ticket={ticket} createTicket={createTicket}/>}
-        <button className='w-[100px] bg-[#205072] text-white mb-3 p-2' onClick={()=>{createTicket(!ticket)}}>
-            Create a new ticket
-        </button>
+        <CustomModal filteredData={filterData} selectedDepartment={selectedDepartment} setSelectedDepartment={setSelectedDepartment} selectedStatus={selectedStatus} setSelectedStatus={setSelectedStatus}/>
+        <CustomModal2 message={'cancel a ticket'} setOpenModal={setOpenModal} openModal={openModal} position={position} />
+
+        {createTicket && <CustomModalTicket ticket={ticket} createTicket={createTicket} />}
+        <div className='flex justify-end'>
+            <button className='w-[100px] bg-[#205072] text-white mb-3 p-2' onClick={() => { createTicket(!ticket) }}>
+                Create a new ticket
+            </button>
+        </div>
         <TableContainer component={Paper} sx={{ maxWidth: '70vw' }} className="m-auto">
             <Table aria-label="simple table">
                 <TableHead className='bg-[#205072]'>
@@ -80,7 +114,7 @@ export default function BasicTable() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {filteredData && filteredData.map((row) => (
+                    {pageFilteredData && pageFilteredData.map((row) => (
                         <TableRow
                             key={row.name}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -93,13 +127,15 @@ export default function BasicTable() {
                             <TableCell align="right text-center">{row.assignedTo}</TableCell>
                             <TableCell align="right text-center">{row.status}</TableCell>
                             <TableCell className='text-center' component="th" scope="row">
-                                <p className='cursor-pointer'>{row.actions}</p>
+                                <button type='button' disabled={row.status === 'Closed' ? true : false} onClick={(e) => { setOpenModal(true); setPosition({ x: e.clientX, y: e.clientY }) }}>{row.actions}</button>
                             </TableCell>
+                            {/* <CustomModal2/> */}
                         </TableRow>
                     ))}
                 </TableBody>
             </Table>
         </TableContainer>
+        <Pagination page={page} setPage={setPage} rowsPerPage={rowsPerPage} setRowsPerPage={setRowsPerPage} count={rows && rows.length} />
     </>
     );
 }

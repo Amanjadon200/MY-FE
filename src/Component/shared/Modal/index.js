@@ -12,7 +12,7 @@ const customStyles = {
 };
 
 // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
-export default function CustomModal({ filteredData,ticket }) {
+export default function CustomModal({ filteredData,ticket,selectedStatus,selectedDepartment,setSelectedDepartment,setSelectedStatus }) {
     const [modalIsOpen, setIsOpen] = React.useState(false);
 
     function openModal() {
@@ -27,12 +27,13 @@ export default function CustomModal({ filteredData,ticket }) {
     function closeModal() {
         setIsOpen(false);
     }
-    const [selectedDepartment, setSelectedDepartment] = useState('');
-    const [selectedStatus, setSelectedStatus] = useState('');
+   
     return (
         <div>
+            <div className='flex justify-end'>
             <button onClick={openModal}
                 className='w-[100px] bg-[#205072] text-white mb-3 p-2'>filter</button>
+                </div>
             <Modal
                 isOpen={modalIsOpen}
                 // onAfterOpen={afterOpenModal}

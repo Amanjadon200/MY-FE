@@ -28,8 +28,8 @@ export const  routes =[
     }
     ,
     {
-        id:"table",
-        path:"/table",
+        id:"tickets",
+        path:"/tickets",
         component:<BasicTable/>
     }
     ,
