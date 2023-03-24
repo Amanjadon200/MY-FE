@@ -2,8 +2,10 @@
 import React, { useState } from "react";
 import { Formik } from "formik";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const navigate=useNavigate()
   const [error, setError] = useState();
   async function postData(data) {
     await axios
@@ -14,6 +16,12 @@ const Register = () => {
         },
       })
       .then((res) => {
+        if(res.data.error==='user already exists'){
+          setTimeout(()=>{
+            
+            navigate('/logIn')
+          },1000)
+        }
         setError(res.data.error);
       })
       .catch((err) => {

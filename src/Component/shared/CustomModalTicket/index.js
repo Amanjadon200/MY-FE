@@ -18,7 +18,7 @@ const customStyles = {
         padding: "0px"
     },
 };
-export default function CustomModalTicket({ ticket, createTicket }) {
+export default function CustomModalTicket({ ticket, createTicket,setClickedSubmitButton }) {
     const [modalIsOpen, setIsOpen] = useState(false);
 
     function openModal() {
@@ -46,6 +46,7 @@ export default function CustomModalTicket({ ticket, createTicket }) {
         uploadFile: ''
     });
     const handleSubmit = async () => {
+        setClickedSubmitButton(true)
         const date = (new Date()).toLocaleDateString();
         const obj = {
             ...formData,

@@ -68,7 +68,7 @@ export default function BasicTable() {
     }, [dataComes, page])
     React.useEffect(() => {
 
-        filterData(selectedDepartment,selectedStatus)
+        filterData(selectedDepartment, selectedStatus)
     }, [filteredData])
     const getTicketData = async () => {
         const res = await axios.get('http://127.0.0.1:3001/tickets');
@@ -78,7 +78,7 @@ export default function BasicTable() {
         }))
         setDataComes(true)
     }
-    const [selectedId,setSelectedId]=useState('')
+    const [selectedId, setSelectedId] = useState('')
     React.useEffect(() => {
         getTicketData();
     }, [selectedId])
@@ -90,11 +90,16 @@ export default function BasicTable() {
     const [ticket, createTicket] = useState(false);
     const [openModal, setOpenModal] = useState(false);
     const [position, setPosition] = useState({ x: 0, y: 0 })
+    const [clickedSubmitButton, setClickedSubmitButton] = useState(false)
+    React.useEffect(() => {
+        getTicketData();
+        setClickedSubmitButton(false);
+    }, [clickedSubmitButton])
     return (<>
-        <CustomModal filteredData={filterData} selectedDepartment={selectedDepartment} setSelectedDepartment={setSelectedDepartment} selectedStatus={selectedStatus} setSelectedStatus={setSelectedStatus}/>
-        <CustomModal2 message={'cancel a ticket'} setOpenModal={setOpenModal} openModal={openModal} position={position} selectedId={selectedId} setSelectedId={setSelectedId}/>
+        <CustomModal filteredData={filterData} selectedDepartment={selectedDepartment} setSelectedDepartment={setSelectedDepartment} selectedStatus={selectedStatus} setSelectedStatus={setSelectedStatus} />
+        <CustomModal2 message={'cancel a ticket'} setOpenModal={setOpenModal} openModal={openModal} position={position} selectedId={selectedId} setSelectedId={setSelectedId} />
 
-        {createTicket && <CustomModalTicket ticket={ticket} createTicket={createTicket} />}
+        {createTicket && <CustomModalTicket ticket={ticket} createTicket={createTicket} setClickedSubmitButton={setClickedSubmitButton} />}
         <div className='flex justify-end'>
             <button className='w-[100px] bg-[#205072] text-white mb-3 p-2' onClick={() => { createTicket(!ticket) }}>
                 Create a new ticket
@@ -128,7 +133,7 @@ export default function BasicTable() {
                             <TableCell align="right text-center">{row.assignedTo}</TableCell>
                             <TableCell align="right text-center">{row.status}</TableCell>
                             <TableCell className='text-center' component="th" scope="row">
-                                <button id={row.id} type='button' disabled={row.status === 'Closed' ? true : false} onClick={(e) => { setOpenModal(true);setSelectedId(e.target.id); setPosition({ x: e.clientX, y: e.clientY }) }}>{row.actions}</button>
+                                <button id={row.id} type='button' disabled={row.status === 'Closed' ? true : false} onClick={(e) => { setOpenModal(true); setSelectedId(e.target.id); setPosition({ x: e.clientX, y: e.clientY }) }}>{row.actions}</button>
                             </TableCell>
                             {/* <CustomModal2/> */}
                         </TableRow>

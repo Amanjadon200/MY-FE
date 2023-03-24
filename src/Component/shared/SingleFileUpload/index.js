@@ -19,7 +19,6 @@ export default function SingleFileUpload({ formData, setFormData }) {
     //         return;
     //     }
     // }
-    console.log((formData.uploadFile.length))
     return (
         <div>
             <input type="file" onChange={handleFileChange} value={formData.uploadFile} />

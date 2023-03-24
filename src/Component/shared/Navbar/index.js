@@ -9,16 +9,16 @@ const Navbar = () => {
   const navigate=useNavigate()
   const logIn=useSelector((state)=>{return state.LogIn})
   return (
-    <div><nav className="navbar navbar-expand-lg bg-body-tertiary text-black-900 w-[100vw]">
+    <div><nav className="navbar navbar-expand-lg bg-darkGray text-white w-[100vw]">
       <div className="flex w-[100vw] text-start">
         <div className="w-[50%] ml-5">
+        <div className="h-10 !w-10">
           <Link to="/">
-            <div >
-              <img src={AJ} className="h-10 w-10" />
-            </div>
+              <img src={AJ}  className="h-10 !w-10" alt="Aj Logo"/>
 
           </Link>
 
+            </div>
         </div>
         <ul className="flex w-[50%] justify-end mr-10 gap-2 items-center">
           <li>
