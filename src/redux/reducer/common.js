@@ -1,11 +1,11 @@
-const isLogIn=false;
-export const LogIn=(state=isLogIn,action)=>{
+const user = { name: '', email: '', isLogIn: false }
+export const UserData = (state = user, action) => {
     switch (action.type) {
         case 'LOG_IN':
-            state=true;
-            return true;
+            state = { name: action.payload.name, email: action.payload.email, isLogIn: true }
+            return state;
         default:
-            state=false;
-            return false;
+            state = { name: '', email: '', isLogIn: false };
+            return state
     }
 }

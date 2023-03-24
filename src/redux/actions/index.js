@@ -1,6 +1,7 @@
-export const LOG_IN=()=>{
+export const LOG_IN=(payload)=>{
     return {
-        type:'LOG_IN'
+        type:'LOG_IN',
+        payload:payload
     }
 }
 export const LOG_OUT=()=>{

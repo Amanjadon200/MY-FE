@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik } from "formik";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,9 +9,15 @@ import {  useNavigate } from "react-router-dom";
 const LogIn = () => {
   const navigate=useNavigate()
   const dispatch = useDispatch();
-  useSelector((state) => {if(state.LogIn){
-    navigate('/')
-  } })
+  const isLogIn = useSelector((state) => { return state.UserData.isLogIn })
+  useEffect(() => {
+    console.log(isLogIn)
+    if(isLogIn){
+      navigate('/')
+    }
+},[isLogIn])
+  const [userData,setUserData]=useState({email:'',name:'',isLogIn:false})
+  const [name,setName]=useState('')
   const [error, setError] = useState();
   async function postData(data) {
     await axios
@@ -22,7 +28,10 @@ const LogIn = () => {
         }
       })
       .then((res) => {
-        dispatch(LOG_IN());
+        if(res.data.message==='user exist'){
+          setName(res.data.name)
+          dispatch(LOG_IN({email:userData.email, name:res.data.name,isLogIn:true}))
+        }
       })
       .catch((err) => {
         if (err.response.status === 401) {
@@ -60,6 +69,7 @@ const LogIn = () => {
         }}
         onSubmit={(values, { setSubmitting, resetForm }) => {
           // console.log(JSON.stringify(values))
+          setUserData(values)
           postData(values);
           setSubmitting(false);
           resetForm({ values: "" });
