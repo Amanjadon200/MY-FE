@@ -12,6 +12,7 @@ import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -24,7 +25,7 @@ export default function AccountMenu() {
   };
   const name = useSelector((state) => { return state.UserData.name })
   const isLogIn = useSelector((state) => { return state.UserData.isLogIn })
-
+  const navigate = useNavigate()
   return (
     isLogIn && <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -39,7 +40,7 @@ export default function AccountMenu() {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32,backgroundColor:'orange' }}>{name  && name.charAt(0).toUpperCase()}</Avatar>
+            <Avatar sx={{ width: 32, height: 32, backgroundColor: 'orange' }}>{name && name.charAt(0).toUpperCase()}</Avatar>
           </IconButton>
         </Tooltip>
       </Box>
@@ -78,11 +79,14 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={()=>{handleClose();navigate('/profile')}}>
           <Avatar /> Profile
         </MenuItem>
         <MenuItem onClick={handleClose}>
           <Avatar /> My account
+        </MenuItem>
+        <MenuItem onClick={() => { handleClose(); navigate('/tickets') }}>
+          <Avatar /> My Tickets
         </MenuItem>
         <Divider />
         <MenuItem onClick={handleClose}>

@@ -7,6 +7,9 @@ module.exports = {
         whiteGray:'#f5f5f5',
         lightGray:'#8c92ac',
         darkGray:'#205072'
+      },
+      border:{
+        1:'1px'
       }
     },
   },

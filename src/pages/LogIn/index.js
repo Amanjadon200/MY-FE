@@ -11,13 +11,11 @@ const LogIn = () => {
   const dispatch = useDispatch();
   const isLogIn = useSelector((state) => { return state.UserData.isLogIn })
   useEffect(() => {
-    console.log(isLogIn)
     if(isLogIn){
       navigate('/')
     }
 },[isLogIn])
-  const [userData,setUserData]=useState({email:'',name:'',isLogIn:false})
-  const [name,setName]=useState('')
+  const [userData, setUserData] = useState({ email: '', name: '', isLogIn: false })
   const [error, setError] = useState();
   async function postData(data) {
     await axios
@@ -29,8 +27,7 @@ const LogIn = () => {
       })
       .then((res) => {
         if(res.data.message==='user exist'){
-          setName(res.data.name)
-          dispatch(LOG_IN({email:userData.email, name:res.data.name,isLogIn:true}))
+          dispatch(LOG_IN({email:data.email, name:res.data.name,isLogIn:true}))
         }
       })
       .catch((err) => {
@@ -45,13 +42,20 @@ const LogIn = () => {
       setError('')
     }, 1000);
   }
-  
+  useEffect(() => {
+    // console.log('useffect called')
+    if (userData.isLogIn) {
+      // console.log(userData)
+      postData(userData)
+    }
+  }, [userData])
   return (
     <div className="!mt-10 poppins bg-whiteGray p-4 m-auto w-[50%]">
       <h1 className="text-xl text-center">Log In</h1>
       <Formik
-        initialValues={{ email: "", password: "" }}
+        initialValues={{ email: "", name: '', isLogIn: false }}
         validate={(values) => {
+          values.isLogIn = true
           const errors = {};
           if (!values.email) {
             errors.email = "Please enter your email";
@@ -69,10 +73,10 @@ const LogIn = () => {
         }}
         onSubmit={(values, { setSubmitting, resetForm }) => {
           // console.log(JSON.stringify(values))
-          setUserData(values)
-          postData(values);
+          setUserData({ ...values, isLogIn: true })
+          // postData(values);
           setSubmitting(false);
-          resetForm({ values: "" });
+          // resetForm({ values: "" });
         }}
       >
         {({

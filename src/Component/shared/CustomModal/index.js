@@ -6,6 +6,7 @@ import axios from 'axios';
 export default function CustomModal2({ message, setOpenModal, openModal, position,selectedId,setSelectedId }) {
     const handleClose = () => {
         setOpenModal(false)
+        setSelectedId('');
     };
     const contentStyle = {
         position: 'absolute',
@@ -16,10 +17,10 @@ export default function CustomModal2({ message, setOpenModal, openModal, positio
         border: '1px solid #000',
         p: 4,
         backgroundColor: 'white',
-        zIndex:-1,
+        zIndex: -1,
     }
-    const deleteData=async()=>{
-        await axios.delete('http://127.0.0.1:3001/tickets?id='+selectedId);
+    const deleteData = async () => {
+        await axios.delete('http://127.0.0.1:3001/tickets?id=' + selectedId);
         setSelectedId('')
     }
     return (
@@ -33,7 +34,7 @@ export default function CustomModal2({ message, setOpenModal, openModal, positio
             >
                 <Box sx={contentStyle}>
                     <header className='flex'>
-                        <p><CancelIcon onClick={() => { setOpenModal(false);deleteData() }} /></p>
+                        <p><CancelIcon onClick={() => { setOpenModal(false); deleteData() }} /></p>
                         <p>{message}</p></header>
                 </Box>
             </Modal>
