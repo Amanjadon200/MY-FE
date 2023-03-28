@@ -6,7 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function Dropdown({setFormData,formData}) {
+export default function Dropdown({setFormData,formData,arr}) {
   const [option, setOption] = React.useState('');
   
   const handleChange = (event) => {
@@ -17,6 +17,7 @@ export default function Dropdown({setFormData,formData}) {
         }
     )  
   };
+  console.log(formData)
   return (
     <Box sx={{ minWidth: '30vw' }} >
       <FormControl fullWidth>
@@ -34,8 +35,11 @@ export default function Dropdown({setFormData,formData}) {
             }}
           classes={{iconFilled : "!text-nero dark:!text-white"}}
         >
-          <MenuItem value="Request">Request</MenuItem>
-          <MenuItem value="Incident">Incident</MenuItem>
+          {
+            arr.map((data)=>{
+              return <MenuItem value={data}>{data}</MenuItem>
+            })
+          }
         </Select>
       </FormControl>
     </Box>

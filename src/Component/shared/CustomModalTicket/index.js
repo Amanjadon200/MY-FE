@@ -84,6 +84,7 @@ export default function CustomModalTicket({ ticket, createTicket,setClickedSubmi
             uploadFile: ''
         })
     }
+    const arr=['Request','Incident'];
     return (
         <div>
             <Modal
@@ -106,7 +107,7 @@ export default function CustomModalTicket({ ticket, createTicket,setClickedSubmi
                             }} placeholder="enter your subject" />
                         </div>
                         <div className='w-full flex items-end'>
-                            <Dropdown className="w-[80%]" setFormData={setFormData} formData={formData} />
+                            <Dropdown className="w-[80%]" setFormData={setFormData} formData={formData} arr={arr}/>
                         </div>
                     </div>
                     <div className='mt-2 p-2'>

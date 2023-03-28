@@ -1,5 +1,4 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import AJ from "../../../assets/AJLogo.jpg"
@@ -33,7 +32,7 @@ const Navbar = () => {
             <button className=" p-2">Register</button>
           </Link>
 
-          {!LogIn ? <button className=" p-2" onClick={() => { navigate('/logIn') }}>LogIn</button> : <button className="p-2" onClick={() => { dispatch(LOG_OUT()) }}>LogOut</button>}
+          {!LogIn ? <button className=" p-2" onClick={() => { navigate('/logIn') }}>LogIn</button>:""}
           {/* <Link to="/tickets">
             <button className=" p-2">Tickets</button>
           </Link> */}

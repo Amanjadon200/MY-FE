@@ -13,6 +13,7 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { LOG_OUT } from '../../../redux/actions';
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -26,6 +27,7 @@ export default function AccountMenu() {
   const name = useSelector((state) => { return state.UserData.name })
   const isLogIn = useSelector((state) => { return state.UserData.isLogIn })
   const navigate = useNavigate()
+  const dispatch=useDispatch()
   return (
     isLogIn && <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -79,7 +81,7 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={()=>{handleClose();navigate('/profile')}}>
+        <MenuItem onClick={() => { handleClose(); navigate('/profile') }}>
           <Avatar /> Profile
         </MenuItem>
         <MenuItem onClick={handleClose}>
@@ -101,7 +103,10 @@ export default function AccountMenu() {
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={() => {
+          handleClose();
+          dispatch(LOG_OUT())
+        }}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
