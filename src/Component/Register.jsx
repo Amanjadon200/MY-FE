@@ -1,12 +1,16 @@
 /* eslint-disable no-undef */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, useFormik } from "formik";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { LOG_OUT } from "../redux/actions";
+import { useDispatch,useSelector } from "react-redux";
 
 const Register = () => {
+  const isLogIn = useSelector((state) => { return state.UserData.isLogIn })
   const navigate = useNavigate();
   const [error, setError] = useState();
+  const dispatch=useDispatch()
   async function postData(data) {
     await axios
       .post("http://127.0.0.1:3001/register", data, {
@@ -29,6 +33,10 @@ const Register = () => {
       .catch((err) => {});
   }
 
+useEffect(()=>{
+  if(isLogIn)
+    dispatch(LOG_OUT())
+},[isLogIn])
   return (
     <div className="!mt-10 poppins bg-whiteGray p-4 m-auto w-[50%]">
       <h1 className="text-xl text-center">Fill the form to register</h1>
@@ -39,8 +47,8 @@ const Register = () => {
           if (!values.name) {
             errors.name = "please enter your name";
           }
-          else if (values.name.length>16) {
-            errors.name = "name should be less than or equal to 16";
+          else if (values.name.length>26) {
+            errors.name = "name should be less than or equal to 26";
           }
           if (values.name)
             if (!values.email) {

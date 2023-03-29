@@ -106,6 +106,7 @@ export default function AccountMenu() {
         <MenuItem onClick={() => {
           handleClose();
           dispatch(LOG_OUT())
+          navigate('/logIn')
         }}>
           <ListItemIcon>
             <Logout fontSize="small" />
