@@ -13,6 +13,7 @@ import axios from 'axios';
 import CustomModalTicket from '../../Component/shared/CustomModalTicket';
 import CustomModal2 from '../../Component/shared/CustomModal';
 import Pagination from '../../Component/shared/Pagination';
+import { useSelector } from 'react-redux';
 // function createData(name, calories, fat, carbs, protein) {
 //     return { name, calories, fat, carbs, protein };
 // }
@@ -51,6 +52,7 @@ export default function BasicTable() {
             }))
         }
     }
+  const id = useSelector((state) => {return state.UserData.id })
 
     let data = []
     const fun = () => {
@@ -71,7 +73,7 @@ export default function BasicTable() {
         filterData(selectedDepartment, selectedStatus)
     }, [filteredData])
     const getTicketData = async () => {
-        const res = await axios.get('http://127.0.0.1:3001/tickets');
+        const res = await axios.get('http://127.0.0.1:3001/tickets?id='+id);
         console.log(res.data)
         setRows(res.data)
         setFilteredData(res.data.filter((data, idx) => {
@@ -101,7 +103,7 @@ export default function BasicTable() {
         <CustomModal filteredData={filterData} selectedDepartment={selectedDepartment} setSelectedDepartment={setSelectedDepartment} selectedStatus={selectedStatus} setSelectedStatus={setSelectedStatus} />
         <CustomModal2 message={'cancel a ticket'} setOpenModal={setOpenModal} openModal={openModal} position={position} selectedId={selectedId} setSelectedId={setSelectedId} />
 
-        {createTicket && <CustomModalTicket ticket={ticket} createTicket={createTicket} setClickedSubmitButton={setClickedSubmitButton} />}
+        {createTicket && <CustomModalTicket ticket={ticket} countTickets={rows.length} createTicket={createTicket} setClickedSubmitButton={setClickedSubmitButton} />}
         <div className='flex justify-end'>
             <button className='w-[100px] bg-[#205072] text-white mb-3 p-2' onClick={() => { createTicket(!ticket) }}>
                 Create a new ticket

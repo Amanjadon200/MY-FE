@@ -9,7 +9,7 @@ import {  useNavigate } from "react-router-dom";
 const LogIn = () => {
   const navigate=useNavigate()
   const dispatch = useDispatch();
-  const isLogIn = useSelector((state) => { return state.UserData.isLogIn })
+  const isLogIn = useSelector((state) => { console.log(state);return state.UserData.isLogIn })
   useEffect(() => {
     if(isLogIn){
       navigate('/')
@@ -27,7 +27,7 @@ const LogIn = () => {
       })
       .then((res) => {
         if(res.data.message==='user exist'){
-          dispatch(LOG_IN({email:data.email, name:res.data.name,isLogIn:true}))
+          dispatch(LOG_IN({email:data.email, name:res.data.name,isLogIn:true,id:res.data.id}))
         }
       })
       .catch((err) => {

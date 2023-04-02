@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import Dropdown from '../Dropdown';
 import SingleFileUpload from '../SingleFileUpload';
 import axios from 'axios'
+import { useSelector } from 'react-redux';
 const customStyles = {
     content: {
         top: '50%',
@@ -18,7 +19,7 @@ const customStyles = {
         padding: "0px"
     },
 };
-export default function CustomModalTicket({ ticket, createTicket,setClickedSubmitButton }) {
+export default function CustomModalTicket({ ticket, createTicket,setClickedSubmitButton,countTickets }) {
     const [modalIsOpen, setIsOpen] = useState(false);
 
     function openModal() {
@@ -45,17 +46,20 @@ export default function CustomModalTicket({ ticket, createTicket,setClickedSubmi
         descriptions: '',
         uploadFile: ''
     });
+  const id = useSelector((state) => {return state.UserData.id })
+
     const handleSubmit = async () => {
         setClickedSubmitButton(true)
         const date = (new Date()).toLocaleDateString();
         const obj = {
             ...formData,
-            id: Math.ceil(Math.random()*100),
+            id: countTickets+1,
             department: 'unassigned',
             time: date,
             assignedTo: "abcd",
             status: "Open",
             actions: ":",
+            user_id:id
         }
         const objData = {
             id: obj.id,
@@ -66,6 +70,7 @@ export default function CustomModalTicket({ ticket, createTicket,setClickedSubmi
             assignedTo: obj.assignedTo,
             status: obj.status,
             actions: obj.actions,
+            user_id:obj.user_id
         }
         const StringObj = JSON.stringify(objData);
         await axios.post('http://127.0.0.1:3001/tickets',
