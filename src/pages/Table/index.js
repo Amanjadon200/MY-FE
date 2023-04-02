@@ -74,7 +74,7 @@ export default function BasicTable() {
     }, [filteredData])
     const getTicketData = async () => {
         const res = await axios.get('http://127.0.0.1:3001/tickets?id='+id);
-        console.log(res.data)
+        // console.log(res.data)
         setRows(res.data)
         setFilteredData(res.data.filter((data, idx) => {
             return idx >= ((page) * rowsPerPage) && idx <= ((page + 1) * rowsPerPage) - 1
@@ -83,7 +83,7 @@ export default function BasicTable() {
     }
     const [selectedId, setSelectedId] = useState('')
     React.useEffect(() => {
-        console.log(selectedId,"**")
+        // console.log(selectedId,"**")
         getTicketData();
     }, [selectedId])
 

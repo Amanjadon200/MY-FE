@@ -19,7 +19,7 @@ export default function Dropdown({ setFormData, formData, arr,isEdit,setIsEdit }
       setFormData({ ...formData, gender: event.target.value })
     }
   };
-  console.log(arr[0])
+  // console.log(arr[0])
   return (
     <Box sx={{ width:'100%'}} className="[&_.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input]:!border-solid [&_.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input]:!border-2 [&_.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input]:!border-gray-500">
       <FormControl fullWidth>

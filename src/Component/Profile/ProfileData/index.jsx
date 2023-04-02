@@ -19,7 +19,7 @@ const ProfileData = () => {
             },
         }
         )
-        console.log(data.data)
+        // console.log(data.data)
         setImageURL(data.data.location)
     }
     const onFileChange=(e)=>{
