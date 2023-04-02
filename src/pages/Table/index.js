@@ -103,7 +103,7 @@ export default function BasicTable() {
         <CustomModal filteredData={filterData} selectedDepartment={selectedDepartment} setSelectedDepartment={setSelectedDepartment} selectedStatus={selectedStatus} setSelectedStatus={setSelectedStatus} />
         <CustomModal2 message={'cancel a ticket'} setOpenModal={setOpenModal} openModal={openModal} position={position} selectedId={selectedId} setSelectedId={setSelectedId} />
 
-        {createTicket && <CustomModalTicket ticket={ticket} countTickets={rows.length} createTicket={createTicket} setClickedSubmitButton={setClickedSubmitButton} />}
+        {createTicket && <CustomModalTicket ticket={ticket} countTickets={rows && rows.length } createTicket={createTicket} setClickedSubmitButton={setClickedSubmitButton} />}
         <div className='flex justify-end'>
             <button className='w-[100px] bg-[#205072] text-white mb-3 p-2' onClick={() => { createTicket(!ticket) }}>
                 Create a new ticket
