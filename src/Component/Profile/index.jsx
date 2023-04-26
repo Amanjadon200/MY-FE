@@ -5,7 +5,7 @@ import ProfileData from './ProfileData'
 
 const MyProfile = () => {
   return (
-    <div className='flex justify-between'>
+    <div className='flex justify-between h-[90vh]'>
       <div className='w-[50%] h-[100vh]'>
         <ProfileData/>
       </div>

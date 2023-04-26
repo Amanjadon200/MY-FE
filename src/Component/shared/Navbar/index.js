@@ -10,7 +10,7 @@ const Navbar = () => {
  let LogIn=false;
  useSelector((state) =>LogIn= state.UserData.isLogIn)
   return (
-    <div><nav className="navbar navbar-expand-lg bg-darkGray text-white w-[100vw]">
+    <div><nav className="navbar navbar-expand-lg bg-darkGray text-white w-[100vw] h-[10vh]">
       <div className="flex w-[100vw] text-start">
         <div className="w-[50%] ml-5">
           <div className="h-10 !w-10">

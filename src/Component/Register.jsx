@@ -38,7 +38,7 @@ useEffect(()=>{
     dispatch(LOG_OUT())
 },[isLogIn])
   return (
-    <div className="!mt-10 poppins bg-whiteGray p-4 m-auto w-[50%]">
+    <div className="!mt-[2.5vh] poppins bg-whiteGray p-4 m-auto w-[50%] h-[87.5vh]">
       <h1 className="text-xl text-center">Fill the form to register</h1>
       <Formik
         initialValues={{ name: "", email: "", password: "" }}
@@ -84,7 +84,7 @@ useEffect(()=>{
         }) => (
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col items-center mt-10 "
+            className="flex flex-col items-center mt-[2.5vh] "
           >
             <div className="w-[100%]">
               <div className="h-20 w-full flex flex-col items-center justify-center">
